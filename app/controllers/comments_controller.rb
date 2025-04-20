@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
   def edit
     respond_to do |format|
       format.html
-      format.js
+      format.turbo_stream
     end
   end
 
@@ -36,9 +36,9 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
+        format.turbo_stream
         format.html { redirect_to root_url, notice: "Comment was successfully updated." }
         format.json { render :show, status: :ok, location: @comment }
-        format.js
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
